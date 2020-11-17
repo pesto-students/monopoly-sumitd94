@@ -1,0 +1,16 @@
+.player-details {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  top: 0;
+  right: 0;
+  padding: 25px;
+}
+
+.player-name {
+    font-size: 2rem;
+}
+
+#player__price {
+    font-size: 1rem;
+}
