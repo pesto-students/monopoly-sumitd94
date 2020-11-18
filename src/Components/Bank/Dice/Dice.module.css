@@ -24,7 +24,8 @@
 }
 
 .dice img {
-    width: 3vh;
+    width: 30px;
     margin: 0 8px;
     padding-bottom: 8px;
+    height: 40px;
 }

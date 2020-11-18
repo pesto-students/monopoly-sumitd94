@@ -26,10 +26,10 @@
 }
 
 .playerDetails {
-    display: flex;
-    flex-direction: column;
-    top: 40vh;
-    position: absolute;
+  display: flex;
+  flex-direction: column;
+  top: 40vh;
+  position: absolute;
 }
 
 .dropDownContainer {
@@ -53,9 +53,13 @@
   width: 10em;
 }
 
-.submit button {
-    padding: 8px 16px;
-    width: 128px;
-    border-radius: 10px;
-    cursor: pointer;
+.submitBtn {
+  padding: 8px 16px;
+  width: 128px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: red;
+  color: white;
 }

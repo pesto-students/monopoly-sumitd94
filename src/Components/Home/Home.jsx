@@ -108,7 +108,7 @@ const Home = () => {
         </div>
 
         <div className={styles.submit}>
-          <button onClick={handleStartGame} type="button">Submit</button>
+          <button onClick={handleStartGame} className={styles.submitBtn} type="button">Submit</button>
         </div>
       </div>
     </div>
