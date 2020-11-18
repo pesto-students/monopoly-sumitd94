@@ -36,7 +36,7 @@ const Home = () => {
                   numberOfPlayers: e.target.value,
                 });
               }}
-              value={2}
+              value={game.numberOfPlayers}
             >
               <option value={2}>2</option>
               <option value={3}>3</option>
@@ -45,10 +45,11 @@ const Home = () => {
           </div>
         </div>
         <div className={styles.playerForm}>
+          {game.numberOfPlayers > 0 && (
           <div className={styles.playerInfo}>
             <input
               type="text"
-              placeholder="Player1 Name"
+              placeholder="Player1 name"
               onChange={(e) => {
                 e.preventDefault();
                 setGame({
@@ -58,10 +59,12 @@ const Home = () => {
               }}
             />
           </div>
+          )}
+          {game.numberOfPlayers > 1 && (
           <div className={styles.playerInfo}>
             <input
-              placeholder="Player2 Name"
               type="text"
+              placeholder="Player2 name"
               onChange={(e) => {
                 e.preventDefault();
                 setGame({
@@ -71,6 +74,37 @@ const Home = () => {
               }}
             />
           </div>
+          )}
+          {game.numberOfPlayers > 2 && (
+          <div className={styles.playerInfo}>
+            <input
+              type="text"
+              placeholder="Player3 name"
+              onChange={(e) => {
+                e.preventDefault();
+                setGame({
+                  ...game,
+                  player3: e.target.value,
+                });
+              }}
+            />
+          </div>
+          )}
+          {game.numberOfPlayers > 3 && (
+          <div className={styles.playerInfo}>
+            <input
+              type="text"
+              placeholder="Player4 name"
+              onChange={(e) => {
+                e.preventDefault();
+                setGame({
+                  ...game,
+                  player4: e.target.value,
+                });
+              }}
+            />
+          </div>
+          )}
         </div>
 
         <div className={styles.submit}>

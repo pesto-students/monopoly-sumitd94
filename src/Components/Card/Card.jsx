@@ -77,7 +77,7 @@ const Card = ({
     return () => {
       setShowModal(false);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
   }, [gameState.diceRolledFlag]);
 
   const modalContent = getModalContent();

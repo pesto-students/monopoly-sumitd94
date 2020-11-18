@@ -32,7 +32,11 @@ const Modal = ({
       },
       cardsPurchasedBy: [
         ...gameState.cardsPurchasedBy,
-        { cardIndex: index, purchasedByPlayer: gameState.currentPlayerName },
+        {
+          cardIndex: index,
+          purchasedByPlayer: gameState.currentPlayerName,
+          groupNumber: cardData.groupNumber,
+        },
       ],
     };
     dispatch({
@@ -46,15 +50,16 @@ const Modal = ({
     const oldPlayerData = gameState[gameState.currentPlayerName];
     const ownerName = gameState.cardsPurchasedBy[cardPurchasedByPlayerIndex].purchasedByPlayer;
     const ownerData = gameState[ownerName];
+    const rentVal = cardData.groupNumber === 1 ? 25 : parseInt(cardData.rent1, 10);
     const gameData = {
       [gameState.currentPlayerName]: {
         ...oldPlayerData,
-        balance: oldPlayerData.balance - cardData.rent1,
+        balance: oldPlayerData.balance - rentVal,
         turn: false,
       },
       [ownerName]: {
         ...ownerData,
-        balance: ownerData.balance + cardData.rent1,
+        balance: ownerData.balance + rentVal,
       },
     };
     dispatch({
@@ -123,7 +128,8 @@ const Modal = ({
     );
   }
 
-  if (cardPurchasedByPlayerIndex !== -1 && receiverName !== gameState.currentPlayerName) {
+  if (cardPurchasedByPlayerIndex !== -1 && receiverName !== gameState.currentPlayerName
+    && gameState[gameState.currentPlayerName].turn) {
     receiverName = gameState.cardsPurchasedBy[cardPurchasedByPlayerIndex].purchasedByPlayer;
     isCardPurchased = true;
   }
@@ -180,6 +186,7 @@ Modal.propTypes = {
     name: PropTypes.string,
     price: PropTypes.number,
     rent1: PropTypes.number,
+    groupNumber: PropTypes.number,
   }),
   color: PropTypes.string,
   type: PropTypes.string,
