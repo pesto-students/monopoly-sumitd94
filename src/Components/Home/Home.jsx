@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { navigate } from '@reach/router';
+import { toast } from 'react-toastify';
 import { GameContext } from '../../contexts/context';
 import styles from './Home.module.css';
 
@@ -13,6 +14,33 @@ const Home = () => {
     player4: '',
   });
   const handleStartGame = () => {
+    let error = false;
+    if (game.numberOfPlayers > 0 && game.player1 === '') {
+      error = true;
+    }
+    if (game.numberOfPlayers > 1 && game.player2 === '') {
+      error = true;
+    }
+    if (game.numberOfPlayers > 2 && game.player3 === '') {
+      error = true;
+    }
+    if (game.numberOfPlayers > 3 && game.player4 === '') {
+      error = true;
+    }
+
+    if (error) {
+      toast.error('Please fill in all the player names', {
+        position: 'top-center',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      return;
+    }
+
     dispatch({
       type: 'START_GAME',
       game,
