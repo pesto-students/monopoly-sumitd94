@@ -117,34 +117,24 @@ const Game = () => {
 
         {/* Index 11 */}
         <div className="space corner jail">
-          <div className="just">Just</div>
-          <div className="drawing">
-            <div className="container">
-              <div className="name">In</div>
-              <div className="window">
-                <div className="bar" />
-                <div className="bar" />
-                <div className="bar" />
-                <i className="person fa fa-frown-o" />
-              </div>
-              <div className="name">Jail</div>
-            </div>
-            <div className="playerContainer">
-              {gameState.player1.playing && gameState.player1.currentIndex === 11 && (
-                <div className="player1">{gameState.player1.name}</div>
-              )}
-              {gameState.player2.playing && gameState.player2.currentIndex === 11 && (
-                <div className="player2">{gameState.player2.name}</div>
-              )}
-              {gameState.player3.playing && gameState.player3.currentIndex === 11 && (
-                <div className="player3">{gameState.player3.name}</div>
-              )}
-              {gameState.player4.playing && gameState.player4.currentIndex === 11 && (
-                <div className="player4">{gameState.player4.name}</div>
-              )}
-            </div>
+          <div className="container">
+            <div className="name">Just</div>
+            <div className="name">Visiting</div>
           </div>
-          <div className="visiting">Visiting</div>
+          <div className="playerContainer">
+            {gameState.player1.playing && gameState.player1.currentIndex === 11 && (
+            <div className="player1">{gameState.player1.name}</div>
+            )}
+            {gameState.player2.playing && gameState.player2.currentIndex === 11 && (
+            <div className="player2">{gameState.player2.name}</div>
+            )}
+            {gameState.player3.playing && gameState.player3.currentIndex === 11 && (
+            <div className="player3">{gameState.player3.name}</div>
+            )}
+            {gameState.player4.playing && gameState.player4.currentIndex === 11 && (
+            <div className="player4">{gameState.player4.name}</div>
+            )}
+          </div>
         </div>
 
         <div className="row vertical-row left-row">
