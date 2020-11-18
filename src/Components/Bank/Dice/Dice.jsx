@@ -67,7 +67,7 @@ const Dice = () => {
   return (
     <div className={styles.diceContainer}>
       {showDice()}
-      <button onClick={handleRandomDice} type="button">Roll Dice</button>
+      <button onClick={handleRandomDice} className={styles.RollDice} type="button">Roll Dice</button>
     </div>
   );
 };
