@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+import { toast } from 'react-toastify';
 import { GameContext } from '../../../contexts/context';
 import Aux from '../../../hoc/Aux/Aux';
 import Backdrop from '../Backdrop/Backdrop';
@@ -21,14 +22,27 @@ const Modal = ({
     );
   }
 
+  let rentVal = 0;
+  if (cardData.groupNumber === 1) {
+    rentVal = 25;
+  } else if (cardData.groupNumber === 2) {
+    rentVal = (gameState.dice1 + gameState.dice2) * parseInt(cardData.rent1, 10);
+  } else {
+    rentVal = parseInt(cardData.rent1, 10);
+  }
+
   const handleBuy = () => {
     const oldPlayerData = gameState[gameState.currentPlayerName];
     const gameData = {
       [gameState.currentPlayerName]: {
         ...oldPlayerData,
         balance: oldPlayerData.balance - cardData.price,
-        cardsPurchased: [...oldPlayerData.cardsPurchased, cardData],
+        cardsPurchased: [...oldPlayerData.cardsPurchased, {
+          ...cardData,
+          cardColor: color,
+        }],
         turn: false,
+        diceRolled: false,
       },
       cardsPurchasedBy: [
         ...gameState.cardsPurchasedBy,
@@ -39,8 +53,25 @@ const Modal = ({
         },
       ],
     };
+    const purchaseMsg = `Wohoo! you have successfully purchased ${cardData.name}`;
+
+    toast.success(purchaseMsg, {
+      position: 'top-center',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+
     dispatch({
       type: 'BUY',
+      game: gameData,
+    });
+
+    dispatch({
+      type: 'NEXT_TURN',
       game: gameData,
     });
     modalClosed();
@@ -50,20 +81,37 @@ const Modal = ({
     const oldPlayerData = gameState[gameState.currentPlayerName];
     const ownerName = gameState.cardsPurchasedBy[cardPurchasedByPlayerIndex].purchasedByPlayer;
     const ownerData = gameState[ownerName];
-    const rentVal = cardData.groupNumber === 1 ? 25 : parseInt(cardData.rent1, 10);
     const gameData = {
       [gameState.currentPlayerName]: {
         ...oldPlayerData,
         balance: oldPlayerData.balance - rentVal,
         turn: false,
+        diceRolled: false,
       },
       [ownerName]: {
         ...ownerData,
         balance: ownerData.balance + rentVal,
       },
     };
+
+    const rentMsg = `You have paid $${rentVal} to ${ownerData.name}`;
+    toast.info(rentMsg, {
+      position: 'top-center',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+
     dispatch({
       type: 'PAY_RENT',
+      game: gameData,
+    });
+
+    dispatch({
+      type: 'NEXT_TURN',
       game: gameData,
     });
     modalClosed();
@@ -75,10 +123,11 @@ const Modal = ({
       [gameState.currentPlayerName]: {
         ...oldPlayerData,
         turn: false,
+        diceRolled: false,
       },
     };
     dispatch({
-      type: 'BUY',
+      type: 'NEXT_TURN',
       game: gameData,
     });
     modalClosed();
@@ -142,7 +191,7 @@ const Modal = ({
       <div className="Modal_Content">
         <p>
           you have to pay
-          {cardData.rent1}
+          {cardData.groupNumber === 1 ? 25 : cardData.rent1}
           {' '}
           to
           {' '}
@@ -157,7 +206,7 @@ const Modal = ({
 
   return (
     <Aux>
-      <Backdrop show={show} clicked={() => { }} />
+      <Backdrop show={show} closeModal={() => { }} />
       <div
         className="Modal"
         style={{

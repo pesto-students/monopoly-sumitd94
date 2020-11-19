@@ -55,7 +55,7 @@
 	grid-template-columns: 125px repeat(9, 80px) 125px;
 	grid-template-rows: 125px repeat(9, 80px) 125px;
 	grid-gap: 2px;
-	margin: 50px auto;
+	margin: 50px;
 	width: 994px;
 	height: 994px;
 	background: black;

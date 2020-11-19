@@ -11,6 +11,8 @@ const GameContextProvider = (props) => {
       name: '',
       balance: 1500,
       turn: true,
+      diceRolled: false,
+      firstChance: true,
       propertyCounts: {
         red: 0,
         yellow: 0,
@@ -29,6 +31,8 @@ const GameContextProvider = (props) => {
       name: '',
       balance: 1500,
       turn: false,
+      diceRolled: false,
+      firstChance: true,
       propertyCounts: {
         red: 0,
         yellow: 0,
@@ -47,6 +51,8 @@ const GameContextProvider = (props) => {
       name: '',
       balance: 1500,
       turn: false,
+      diceRolled: false,
+      firstChance: true,
       propertyCounts: {
         red: 0,
         yellow: 0,
@@ -64,6 +70,8 @@ const GameContextProvider = (props) => {
       playing: false,
       name: '',
       turn: false,
+      diceRolled: false,
+      firstChance: true,
       balance: 1500,
       propertyCounts: {
         red: 0,
