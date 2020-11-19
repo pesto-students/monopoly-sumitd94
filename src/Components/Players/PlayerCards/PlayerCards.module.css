@@ -12,11 +12,8 @@
   width: 128px;
   position: relative;
   display: inline-block;
-}
-
-.colorHead {
-  background: red;
-  height: 8px;
+  box-shadow: 1px 2px;
+  vertical-align: top;
 }
 
 .propertyName {

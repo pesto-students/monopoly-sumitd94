@@ -191,7 +191,7 @@ const Modal = ({
       <div className="Modal_Content">
         <p>
           you have to pay
-          {cardData.groupNumber === 1 ? 25 : cardData.rent1}
+          {rentVal}
           {' '}
           to
           {' '}

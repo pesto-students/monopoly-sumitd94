@@ -6,6 +6,7 @@ import Players from '../Players/Players';
 import FreeParkingIcon from '../../assets/free_parking_icon.png';
 import JakeIcon from '../../assets/jake_icon.png';
 import Go from '../CornerCard/Go/Go';
+import Tax from '../Card/Tax/Tax';
 import './Game.css';
 
 const Game = () => {
@@ -64,19 +65,7 @@ const Game = () => {
           />
 
           {/* Index 5 */}
-          <div className="space fee income-tax">
-            <div className="container">
-              <div className="name">Income Tax</div>
-              <div className="diamond" />
-              <div className="instructions">
-                Pay 10%
-                <br />
-                or
-                <br />
-                $200
-              </div>
-            </div>
-          </div>
+          <Tax type="income-tax" index={5} name="City Tax" pricetext="$200" />
           <Card
             name="Baltic Avenue"
             index={4}
@@ -354,13 +343,7 @@ const Game = () => {
           />
 
           {/* Index 39 */}
-          <div className="space fee luxury-tax">
-            <div className="container">
-              <div className="name">Luxury Tax</div>
-              <div className="drawing fa fa-diamond" />
-              <div className="instructions">Pay $75.00</div>
-            </div>
-          </div>
+          <Tax type="income-tax" index={39} name="LUXURY TAX" pricetext="$75" />
           <Card
             name="Boardwalk"
             index={40}

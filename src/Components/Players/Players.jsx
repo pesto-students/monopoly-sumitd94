@@ -13,7 +13,7 @@ const Players = () => {
   const [state, setState] = useState({ showModal: false, cardDetails: [] });
 
   const showModalHandler = (playerName) => {
-    if (state.cardDetails.length === 0) {
+    if (gameState[playerName].cardsPurchased.length === 0) {
       toast.info(`${gameState[playerName].name} has not purchased any cards yet`, {
         position: 'top-center',
         autoClose: 5000,

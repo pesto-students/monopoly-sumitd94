@@ -30,6 +30,8 @@ function startGame(state, game) {
 function rollDice(state) {
   const dice1 = Math.floor(Math.random() * 6) + 1;
   const dice2 = Math.floor(Math.random() * 6) + 1;
+  // const dice1 = 2;
+  // const dice2 = 2;
   const newState = {
     ...state,
     dice1,
