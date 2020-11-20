@@ -8,14 +8,28 @@ const PlayerCards = ({ cardDetails }) => {
   const cardLists = cardDetails.map((card, index) => (
     // eslint-disable-next-line react/no-array-index-key
     <li key={index}>
-      <div className={classNames.CardContainer}>
-        <div
-          className={classNames[card.cardColor]}
-        />
-        <div className={classNames.propertyName}>
-          {card.name}
+      <div className={classNames.flipCard}>
+        <div className={classNames.flipCardInner}>
+          <div className={classNames.flipCardFront}>
+            <div
+              className={classNames[card.cardColor]}
+            />
+            <div className={classNames.propertyName}>
+              {card.name}
+            </div>
+            <p className={classNames.cardPrices}>{`$${card.price}`}</p>
+          </div>
+          <div className={classNames.flipCardBack}>
+            <div className={classNames.tradeBtnsContainer}>
+              <div className={classNames.trade}>
+                <button type="button" className={classNames.tradeBtns}>Trade</button>
+              </div>
+              <div className={classNames.mortgage}>
+                <button type="button" className={classNames.tradeBtns}>Mortgage</button>
+              </div>
+            </div>
+          </div>
         </div>
-        <p className={classNames.cardPrices}>{`$${card.price}`}</p>
       </div>
     </li>
   ));
