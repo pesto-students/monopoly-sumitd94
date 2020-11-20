@@ -9,7 +9,123 @@ import Go from '../CornerCard/Go/Go';
 import Tax from '../Card/Tax/Tax';
 import './Game.css';
 
+const gameBlocks = require('../../data/gameBlocks.json');
+
 const Game = () => {
+  const getBottomLeftRowCards = (toIndex, fromIndex) => {
+    const cardsArr = [];
+    for (let i = toIndex; i >= fromIndex; i -= 1) {
+      if (gameBlocks[i - 1].name === 'Community Chest') {
+        cardsArr.push(<Card index={i} type="community" />);
+      } else if (gameBlocks[i - 1].name === 'Chance') {
+        cardsArr.push(<Card index={i} type="chance" />);
+      } else if (gameBlocks[i - 1].name === 'City Tax') {
+        cardsArr.push(<Tax type="income-tax" index={i} name="City Tax" pricetext={gameBlocks[i - 1].pricetext} />);
+      } else if (gameBlocks[i - 1].name === 'LUXURY TAX') {
+        cardsArr.push(<Tax type="income-tax" index={i} name="LUXURY TAX" pricetext={gameBlocks[i - 1].pricetext} />);
+      } else if (gameBlocks[i - 1].groupNumber === 1) {
+        cardsArr.push(
+          <Card
+            name={gameBlocks[i - 1].name}
+            index={i}
+            pricetext={gameBlocks[i - 1].pricetext}
+            color=""
+            type="railroad"
+          />,
+        );
+      } else if (gameBlocks[i - 1].name === 'Electric Company') {
+        cardsArr.push(
+          <Card
+            name={gameBlocks[i - 1].name}
+            index={i}
+            pricetext={gameBlocks[i - 1].pricetext}
+            color=""
+            type="utility electric"
+          />,
+        );
+      } else if (gameBlocks[i - 1].name === 'Water Works') {
+        cardsArr.push(
+          <Card
+            name={gameBlocks[i - 1].name}
+            index={i}
+            pricetext={gameBlocks[i - 1].pricetext}
+            color=""
+            type="utility waterworks"
+          />,
+        );
+      } else {
+        cardsArr.push(
+          <Card
+            name={gameBlocks[i - 1].name}
+            index={i}
+            pricetext={gameBlocks[i - 1].pricetext}
+            color={gameBlocks[i - 1].colorName}
+            type="property"
+          />,
+        );
+      }
+    }
+
+    return cardsArr;
+  };
+
+  const getTopRightCards = (fromIndex, toIndex) => {
+    const cardsArr = [];
+    for (let i = fromIndex; i <= toIndex; i += 1) {
+      if (gameBlocks[i - 1].name === 'Community Chest') {
+        cardsArr.push(<Card index={i} type="community" />);
+      } else if (gameBlocks[i - 1].name === 'Chance') {
+        cardsArr.push(<Card index={i} type="chance" />);
+      } else if (gameBlocks[i - 1].name === 'City Tax') {
+        cardsArr.push(<Tax type="income-tax" index={i} name="City Tax" pricetext={gameBlocks[i - 1].pricetext} />);
+      } else if (gameBlocks[i - 1].name === 'LUXURY TAX') {
+        cardsArr.push(<Tax type="income-tax" index={i} name="LUXURY TAX" pricetext={gameBlocks[i - 1].pricetext} />);
+      } else if (gameBlocks[i - 1].groupNumber === 1) {
+        cardsArr.push(
+          <Card
+            name={gameBlocks[i - 1].name}
+            index={i}
+            pricetext={gameBlocks[i - 1].pricetext}
+            color=""
+            type="railroad"
+          />,
+        );
+      } else if (gameBlocks[i - 1].name === 'Electric Company') {
+        cardsArr.push(
+          <Card
+            name={gameBlocks[i - 1].name}
+            index={i}
+            pricetext={gameBlocks[i - 1].pricetext}
+            color=""
+            type="utility electric"
+          />,
+        );
+      } else if (gameBlocks[i - 1].name === 'Water Works') {
+        cardsArr.push(
+          <Card
+            name={gameBlocks[i - 1].name}
+            index={i}
+            pricetext={gameBlocks[i - 1].pricetext}
+            color=""
+            type="utility waterworks"
+          />,
+        );
+      } else {
+        cardsArr.push(
+          <Card
+            name={gameBlocks[i - 1].name}
+            index={i}
+            pricetext={gameBlocks[i - 1].pricetext}
+            color={gameBlocks[i - 1].colorName}
+            type="property"
+          />,
+        );
+      }
+    }
+
+    return cardsArr;
+  };
+
   const { gameState } = useContext(GameContext);
   return (
     <div className="table">
@@ -33,55 +149,8 @@ const Game = () => {
         <Go />
 
         <div className="row horizontal-row bottom-row">
-          <Card
-            name="Connecticut Avenue"
-            index={10}
-            pricetext="$120"
-            color="light-blue"
-            type="property"
-          />
-          <Card
-            name="Vermont Avenue"
-            index={9}
-            pricetext="Price $100"
-            color="light-blue"
-            type="property"
-          />
-          {/* Index 8 */}
-          <Card index={8} type="chance" />
-          <Card
-            name="Oriental Avenue"
-            index={7}
-            pricetext="$100"
-            color="light-blue"
-            type="property"
-          />
-          <Card
-            name="Reading Railroad"
-            index={6}
-            pricetext="$200"
-            color=""
-            type="railroad"
-          />
-
-          {/* Index 5 */}
-          <Tax type="income-tax" index={5} name="City Tax" pricetext="$200" />
-          <Card
-            name="Baltic Avenue"
-            index={4}
-            pricetext="$60"
-            color="brown"
-            type="property"
-          />
-          {/* Index 3 */}
-          <Card index={3} type="community" />
-          <Card
-            name="Mediterranean Avenue"
-            index={2}
-            pricetext="$60"
-            color="brown"
-            type="property"
-          />
+          {getBottomLeftRowCards(10, 2).map((card) => card)}
+          ;
         </div>
 
         {/* Index 11 */}
@@ -107,79 +176,8 @@ const Game = () => {
         </div>
 
         <div className="row vertical-row left-row">
-          {/* <Card name="City Tax" pricetext="Pay $200" color="" type="chance" />
-            <Card name="Pacific Avenue" pricetext="$300" color="green" type="property" />
-            <Card name="North Carolina Avenue" pricetext="$300" color="green" type="property" />
-            <Card name="Pennsylvania Avenue" pricetext="$320" color="green" type="property" />
-            <Card name="Short Line" pricetext="$200" color="" type="property" />
-            <Card name="Park Place" pricetext="$350" color="light-blue" type="property" />
-            <Card name="LUXURY TAX" pricetext="Pay $100" color="" type="chance" />
-            <Card name="Boardwalk" pricetext="$400" color="light-blue" type="property" /> */}
-
-          <Card
-            name="New York Avenue"
-            index={20}
-            pricetext="$200"
-            color="orange"
-            type="property"
-          />
-
-          <Card
-            name="Tennessee Avenue"
-            index={19}
-            pricetext="$180"
-            color="orange"
-            type="property"
-          />
-
-          {/* Index 18 */}
-          <Card index={18} type="community" />
-          <Card
-            name="St. James Place"
-            index={17}
-            pricetext="$180"
-            color="orange"
-            type="property"
-          />
-          <Card
-            name="Pennsylvania Railroad"
-            index={16}
-            pricetext="$200"
-            color=""
-            type="railroad"
-          />
-
-          <Card
-            name="Virginia Avenue"
-            index={15}
-            pricetext="$160"
-            color="pink"
-            type="property"
-          />
-
-          <Card
-            name="States Avenue"
-            index={14}
-            pricetext="$140"
-            color="pink"
-            type="property"
-          />
-
-          <Card
-            name="Electric Company"
-            index={13}
-            pricetext="$150"
-            color=""
-            type="utility electric"
-          />
-
-          <Card
-            name="St. Charles Place"
-            index={12}
-            pricetext="$140"
-            color="pink"
-            type="property"
-          />
+          {getBottomLeftRowCards(20, 12).map((card) => card)}
+          ;
         </div>
 
         {/* Index 21 */}
@@ -208,68 +206,8 @@ const Game = () => {
         </div>
 
         <div className="row horizontal-row top-row">
-          <Card
-            name="Kentucky Avenue"
-            index={22}
-            pricetext="$220"
-            color="red"
-            type="property"
-          />
-
-          {/* Index 23 */}
-          <Card index={23} type="chance" />
-          <Card
-            name="Indiana Avenue"
-            index={24}
-            pricetext="$220"
-            color="red"
-            type="property"
-          />
-          <Card
-            name="Illinois Avenue"
-            index={25}
-            pricetext="$240"
-            color="red"
-            type="property"
-          />
-          <Card
-            name="B&O Railroad"
-            index={26}
-            pricetext="$200"
-            color=""
-            type="railroad"
-          />
-          <Card
-            name="Atlantic Avenue"
-            index={27}
-            pricetext="$260"
-            color="yellow"
-            type="property"
-          />
-
-          <Card
-            name="Ventnor Avenue"
-            index={28}
-            pricetext="$260"
-            color="yellow"
-            type="property"
-          />
-
-          <Card
-            name="Water Works"
-            index={29}
-            pricetext="$150"
-            color=""
-            type="utility waterworks"
-          />
-
-          <Card
-            name="Marvin Gardens"
-            index={30}
-            pricetext="$280"
-            color="yellow"
-            type="property"
-          />
+          {getTopRightCards(22, 30).map((card) => card)}
+          ;
         </div>
 
         {/* Index 31 */}
@@ -298,59 +236,8 @@ const Game = () => {
         </div>
 
         <div className="row vertical-row right-row">
-          <Card
-            name="Pacific Avenue"
-            index={32}
-            pricetext="$300"
-            color="green"
-            type="property"
-          />
-          <Card
-            name="North Carolina Avenue"
-            index={33}
-            pricetext="$300"
-            color="green"
-            type="property"
-          />
-
-          {/* Index 34 */}
-          <Card index={34} type="community" />
-
-          <Card
-            name="Pennsylvania Avenue"
-            index={35}
-            pricetext="$200"
-            color="green"
-            type="property"
-          />
-          <Card
-            name="Short Line"
-            index={36}
-            pricetext="$200"
-            color=""
-            type="railroad"
-          />
-
-          {/* Index 37 */}
-          <Card index={37} type="chance" />
-
-          <Card
-            name="Park Place"
-            index={38}
-            pricetext="$360"
-            color="dark-blue"
-            type="property"
-          />
-
-          {/* Index 39 */}
-          <Tax type="income-tax" index={39} name="LUXURY TAX" pricetext="$75" />
-          <Card
-            name="Boardwalk"
-            index={40}
-            pricetext="$400"
-            color="dark-blue"
-            type="property"
-          />
+          {getTopRightCards(32, 40).map((card) => card)}
+          ;
         </div>
       </div>
     </div>

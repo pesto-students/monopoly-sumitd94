@@ -1,7 +1,6 @@
 /* eslint-disable react/require-default-props */
 import React from 'react';
 import PropTypes from 'prop-types';
-import Aux from '../../../hoc/Aux/Aux';
 import classNames from './PlayerCards.module.css';
 
 const PlayerCards = ({ cardDetails }) => {
@@ -35,11 +34,11 @@ const PlayerCards = ({ cardDetails }) => {
   ));
 
   return (
-    <Aux>
+    <>
       <ul className={classNames.cardLists}>
         {cardLists}
       </ul>
-    </Aux>
+    </>
   );
 };
 

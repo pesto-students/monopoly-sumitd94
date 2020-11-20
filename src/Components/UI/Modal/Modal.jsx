@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
 import { GameContext } from '../../../contexts/context';
-import Aux from '../../../hoc/Aux/Aux';
 import Backdrop from '../Backdrop/Backdrop';
 
 import './Modal.css';
@@ -205,7 +204,7 @@ const Modal = ({
   }
 
   return (
-    <Aux>
+    <>
       <Backdrop show={show} closeModal={() => { }} />
       <div
         className="Modal"
@@ -216,7 +215,7 @@ const Modal = ({
       >
         {modalContent}
       </div>
-    </Aux>
+    </>
   );
 };
 

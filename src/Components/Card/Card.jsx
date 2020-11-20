@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Modal from '../UI/Modal/Modal';
-import Aux from '../../hoc/Aux/Aux';
 import { GameContext } from '../../contexts/context';
 import RailRoadIcon from '../../assets/train_icon.png';
 import ElectricIcon from '../../assets/electric_icon.png';
@@ -84,7 +83,7 @@ const Card = ({
   const cardIcon = getCardIcon(type);
 
   return (
-    <Aux>
+    <>
       {showModal && (
         <Modal
           show={showModal}
@@ -127,7 +126,7 @@ const Card = ({
           </div>
         </div>
       </div>
-    </Aux>
+    </>
   );
 };
 

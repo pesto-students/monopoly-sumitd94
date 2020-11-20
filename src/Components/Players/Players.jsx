@@ -2,7 +2,6 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { useContext, useState } from 'react';
 import { toast } from 'react-toastify';
-import Aux from '../../hoc/Aux/Aux';
 import { GameContext } from '../../contexts/context';
 import Modal from './Modal/Modal';
 import PlayerCards from './PlayerCards/PlayerCards';
@@ -39,7 +38,7 @@ const Players = () => {
   };
 
   return (
-    <Aux>
+    <>
       <Modal show={state.showModal} closeModal={closeModalHandler}>
         <PlayerCards cardDetails={state.cardDetails} />
       </Modal>
@@ -117,7 +116,7 @@ const Players = () => {
           ''
         )}
       </div>
-    </Aux>
+    </>
   );
 };
 
