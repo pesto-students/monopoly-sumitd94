@@ -1,0 +1,44 @@
+.player-details {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  top: 0;
+  right: 0;
+  padding: 25px;
+}
+
+.player-name {
+  font-size: 2rem;
+}
+
+#player__price {
+  font-size: 1rem;
+}
+
+.player-1 {
+  border-radius: 8px;
+	cursor: pointer;
+	box-shadow: 5px 10px;
+	margin-bottom: 8px;
+}
+
+.player-2 {
+	border-radius: 8px;
+	cursor: pointer;
+	box-shadow: 5px 10px;
+	margin-bottom: 8px;
+}
+
+.player-3 {
+	border-radius: 8px;
+	cursor: pointer;
+	box-shadow: 5px 10px;
+	margin-bottom: 8px;
+}
+
+.player-4 {
+	border-radius: 8px;
+	cursor: pointer;
+	box-shadow: 5px 10px;
+	margin-bottom: 8px;
+}
