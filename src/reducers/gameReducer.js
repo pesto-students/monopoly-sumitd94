@@ -30,6 +30,17 @@ function startGame(state, game) {
 function rollDice(state) {
   const dice1 = Math.floor(Math.random() * 6) + 1;
   const dice2 = Math.floor(Math.random() * 6) + 1;
+
+  const playerPrevIndex = state[state.currentPlayerName].currentIndex;
+  const currDiceVal = dice1 + dice2;
+  let playerBalance = state[state.currentPlayerName].balance;
+  let didPlayerCrossedGo = false;
+
+  if (playerPrevIndex + currDiceVal > 40) {
+    playerBalance += 200;
+    didPlayerCrossedGo = true;
+  }
+
   // const dice1 = 2;
   // const dice2 = 2;
   const newState = {
@@ -41,6 +52,8 @@ function rollDice(state) {
       ...state[state.currentPlayerName],
       currentIndex: (state[state.currentPlayerName].currentIndex + dice1 + dice2) % 40,
       diceRolled: true,
+      balance: playerBalance,
+      didPlayerCrossedGo,
     },
   };
   return newState;

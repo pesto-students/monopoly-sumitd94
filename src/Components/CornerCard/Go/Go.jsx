@@ -1,8 +1,36 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
+import { toast } from 'react-toastify';
 import { GameContext } from '../../../contexts/context';
 
 const Go = () => {
   const { gameState } = useContext(GameContext);
+
+  const showToast = (show) => {
+    if (show) {
+      const goMessage = 'WoHoo, you have received $200';
+      toast.info(goMessage, {
+        position: 'top-center',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (gameState[gameState.currentPlayerName].didPlayerCrossedGo) {
+      showToast(true);
+    }
+
+    return () => {
+      showToast(false);
+    };
+    // eslint-disable-next-line
+  }, [gameState.diceRolledFlag]);
+
   return (
     <div className="space corner go">
       <div className="container">

@@ -176,10 +176,12 @@ const Modal = ({
     );
   }
 
-  if (cardPurchasedByPlayerIndex !== -1 && receiverName !== gameState.currentPlayerName
-    && gameState[gameState.currentPlayerName].turn) {
+  if (cardPurchasedByPlayerIndex !== -1) {
     receiverName = gameState.cardsPurchasedBy[cardPurchasedByPlayerIndex].purchasedByPlayer;
-    isCardPurchased = true;
+    if (receiverName !== gameState.currentPlayerName
+      && gameState[gameState.currentPlayerName].turn) {
+      isCardPurchased = true;
+    }
   }
 
   if (isCardPurchased) {
