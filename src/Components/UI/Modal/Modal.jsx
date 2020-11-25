@@ -7,7 +7,7 @@ import Backdrop from '../Backdrop/Backdrop';
 import './Modal.css';
 
 const Modal = ({
-  show, modalClosed, cardData, type, children, color, index, cardIcon,
+  show, modalClosed, cardData, type, children, color, index, cardIcon, chanceIndex, communityIndex,
 }) => {
   const { gameState, dispatch } = useContext(GameContext);
 
@@ -132,6 +132,148 @@ const Modal = ({
     modalClosed();
   };
 
+  const getAmountToCollect = (commIndex) => {
+    let amount = 0;
+
+    switch (commIndex) {
+      case (1):
+        amount = 10;
+        break;
+      case (2):
+        amount = 50;
+        break;
+      case (3):
+        amount = 100;
+        break;
+      case (4):
+        amount = 20;
+        break;
+      case (5):
+        amount = 100;
+        break;
+      case (6):
+        amount = 100;
+        break;
+      case (7):
+        amount = 25;
+        break;
+      default:
+        amount = 0;
+        break;
+    }
+
+    return amount;
+  };
+
+  const getMessageToDisplay = (commIndex) => {
+    let message = '';
+
+    switch (commIndex) {
+      case (1):
+        message = 'You have won second prize in a beauty contest. Collect $10.';
+        break;
+      case (2):
+        message = 'From sale of stock, you get $50.';
+        break;
+      case (3):
+        message = 'Life insurance matures. Collect $100.';
+        break;
+      case (4):
+        message = 'Income tax refund. Collect $20.';
+        break;
+      case (5):
+        message = 'Holiday fund matures. Receive $100.';
+        break;
+      case (6):
+        message = 'You inherit $100.';
+        break;
+      case (7):
+        message = 'Receive $25 consultancy fee.';
+        break;
+      default:
+        message = '';
+        break;
+    }
+
+    return message;
+  };
+
+  const handleChanceCommunity = () => {
+    if (type === 'chance') {
+      if (chanceIndex === 10) {
+        dispatch({
+          type: 'MOVE_PLAYER',
+          data: {
+            playerId: gameState.currentPlayerName,
+            newCardPositionIndex: 40,
+            playerShouldCollectGoMoney: false,
+          },
+        });
+
+        modalClosed();
+      } else if (chanceIndex === 11 || chanceIndex === 14) {
+        dispatch({
+          type: 'MOVE_PLAYER',
+          data: {
+            playerId: gameState.currentPlayerName,
+            newCardPositionIndex: chanceIndex === 11 ? 25 : 12,
+            playerShouldCollectGoMoney: false,
+          },
+        });
+        modalClosed();
+      } else {
+        dispatch({
+          type: 'NEXT_TURN',
+        });
+        modalClosed();
+      }
+    }
+
+    if (type === 'community') {
+      if (communityIndex === 13) {
+        dispatch({
+          type: 'MOVE_PLAYER',
+          data: {
+            playerId: gameState.currentPlayerName,
+            newCardPositionIndex: 1,
+            playerShouldCollectGoMoney: true,
+          },
+        });
+      } else if (communityIndex === 1 || communityIndex === 2
+        || communityIndex === 3
+        || communityIndex === 4
+        || communityIndex === 5
+        || communityIndex === 6
+        || communityIndex === 7) {
+        dispatch({
+          type: 'COLLECT_AMOUNT',
+          data: {
+            playerId: gameState.currentPlayerName,
+            amount: getAmountToCollect(communityIndex),
+          },
+        });
+
+        modalClosed();
+
+        const communityMsg = getMessageToDisplay(communityIndex);
+        toast.success(communityMsg, {
+          position: 'bottom-right',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      } else {
+        dispatch({
+          type: 'NEXT_TURN',
+        });
+        modalClosed();
+      }
+    }
+  };
+
   let modalContent = '';
 
   if (type === 'chance' || type === 'community') {
@@ -139,7 +281,7 @@ const Modal = ({
       <div className="Modal_Content">
         {children}
         <div className="Modal_buttons">
-          <button type="button" className="Pass" onClick={handlePass}>
+          <button type="button" className="Pass" onClick={handleChanceCommunity}>
             End Turn
           </button>
         </div>
@@ -244,6 +386,8 @@ Modal.propTypes = {
   modalClosed: PropTypes.func.isRequired,
   index: PropTypes.number.isRequired,
   cardIcon: PropTypes.string,
+  chanceIndex: PropTypes.number.isRequired,
+  communityIndex: PropTypes.number.isRequired,
 };
 
 export default Modal;

@@ -28,8 +28,10 @@ function startGame(state, game) {
 }
 
 function rollDice(state) {
-  const dice1 = Math.floor(Math.random() * 6) + 1;
-  const dice2 = Math.floor(Math.random() * 6) + 1;
+  // const dice1 = Math.floor(Math.random() * 6) + 1;
+  // const dice2 = Math.floor(Math.random() * 6) + 1;
+  const dice1 = 1;
+  const dice2 = 1;
 
   const playerPrevIndex = state[state.currentPlayerName].currentIndex;
   const currDiceVal = dice1 + dice2;
@@ -41,8 +43,6 @@ function rollDice(state) {
     didPlayerCrossedGo = true;
   }
 
-  // const dice1 = 2;
-  // const dice2 = 2;
   const newState = {
     ...state,
     dice1,
@@ -108,6 +108,55 @@ const nextTurn = (state) => {
 };
 const payRent = (state, game) => buyProperty(state, game);
 
+const movePlayer = (state, { playerId, newCardPositionIndex, playerShouldCollectGoMoney }) => {
+  let { balance } = state[playerId];
+
+  if (playerShouldCollectGoMoney) {
+    balance += 200;
+  }
+
+  const newState = {
+    ...state,
+    diceRolledFlag: !state.diceRolledFlag,
+    [playerId]: {
+      ...state[playerId],
+      currentIndex: newCardPositionIndex,
+      balance,
+    },
+  };
+
+  return newState;
+};
+
+const collectAmount = (state, { playerId, amount }) => {
+  let { balance } = state[playerId];
+  balance += amount;
+
+  const currentPlayerNumber = incrementPlayerNumber(
+    state.currentPlayerNumber,
+    state.numberOfPlayers,
+  );
+  const currentPlayerName = `player${currentPlayerNumber}`;
+
+  const newState = {
+    ...state,
+    currentPlayerNumber,
+    currentPlayerName,
+    [playerId]: {
+      ...state[playerId],
+      balance,
+      turn: false,
+      diceRolled: false,
+    },
+    [currentPlayerName]: {
+      ...state[currentPlayerName],
+      turn: true,
+    },
+  };
+
+  return newState;
+};
+
 const GameReducer = (state, action) => {
   switch (action.type) {
     case 'START_GAME':
@@ -120,6 +169,10 @@ const GameReducer = (state, action) => {
       return payRent(state, action.game);
     case 'NEXT_TURN':
       return nextTurn(state);
+    case 'MOVE_PLAYER':
+      return movePlayer(state, action.data);
+    case 'COLLECT_AMOUNT':
+      return collectAmount(state, action.data);
     default:
       return state;
   }

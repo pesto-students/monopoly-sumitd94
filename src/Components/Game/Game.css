@@ -7,7 +7,7 @@
 }
 
 .player3 {
-	background-color: black;
+	background-color: darkblue;
 }
 
 .player4 {
@@ -261,4 +261,25 @@
 
 .chance .drawing {
 	font-size: 90px;
+}
+
+
+.player1-card .purchasedBy {
+    border: 3px solid red;
+    height: 5px;
+}
+
+.player2-card .purchasedBy {
+    border: 3px solid yellow;
+    height: 5px;
+}
+
+.player3-card .purchasedBy {
+    border: 3px solid darkblue;
+    height: 5px;
+}
+
+.player4-card .purchasedBy {
+    border: 3px solid green;
+    height: 5px;
 }

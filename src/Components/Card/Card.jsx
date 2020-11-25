@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { toast } from 'react-toastify';
 import Modal from '../UI/Modal/Modal';
 import { GameContext } from '../../contexts/context';
 import RailRoadIcon from '../../assets/train_icon.png';
@@ -15,10 +16,33 @@ const communityCards = require('../../data/communityCards.json');
 const Card = ({
   color, type, index,
 }) => {
-  const { gameState } = useContext(GameContext);
+  const { gameState, dispatch } = useContext(GameContext);
   const { name, pricetext } = gameBlocks[index - 1];
 
   const [showModal, setShowModal] = useState(false);
+  const randomChanceIndex = Math.floor(Math.random() * 16) + 1;
+  const randomCommunityIndex = Math.floor(Math.random() * 16) + 1;
+  const cardPurchasedByPlayerIndex = gameState.cardsPurchasedBy.findIndex(
+    (element) => element.cardIndex === index,
+  );
+
+  console.log(cardPurchasedByPlayerIndex);
+
+  const playerPurchasedCard = () => (cardPurchasedByPlayerIndex !== -1
+    && gameState.cardsPurchasedBy[cardPurchasedByPlayerIndex].purchasedByPlayer
+    === gameState.currentPlayerName);
+
+  const getCardPurchasedBy = () => {
+    let playerName = '';
+
+    if (cardPurchasedByPlayerIndex !== -1) {
+      playerName = gameState.cardsPurchasedBy[cardPurchasedByPlayerIndex].purchasedByPlayer;
+    }
+
+    return `${playerName}-card`;
+  };
+
+  const cardPurchasedByPlayer = getCardPurchasedBy();
 
   const playerOnCard = () => {
     const {
@@ -37,8 +61,6 @@ const Card = ({
   };
 
   const getModalContent = () => {
-    const randomChanceIndex = Math.floor(Math.random() * 16) + 1;
-    const randomCommunityIndex = Math.floor(Math.random() * 16) + 1;
     let content;
     if (type === 'chance') {
       content = chanceCards[randomChanceIndex - 1];
@@ -69,8 +91,24 @@ const Card = ({
   };
 
   useEffect(() => {
-    if (playerOnCard()) {
+    if (playerOnCard() && !playerPurchasedCard()) {
       setShowModal(true);
+    }
+
+    if (playerOnCard() && playerPurchasedCard()) {
+      toast.success('You have already Purchased this card !', {
+        position: 'bottom-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+
+      dispatch({
+        type: 'NEXT_TURN',
+      });
     }
 
     return () => {
@@ -93,11 +131,13 @@ const Card = ({
           type={type}
           index={index}
           cardIcon={cardIcon}
+          chanceIndex={randomChanceIndex - 1}
+          communityIndex={3}
         >
           {modalContent}
         </Modal>
       )}
-      <div className={['space', type].join(' ')}>
+      <div className={['space', type, cardPurchasedByPlayer].join(' ')}>
         <div className="container">
           {color !== '' && (
             <div className={['color-bar', color].join(' ')} />
@@ -124,6 +164,7 @@ const Card = ({
               <div className="player4">{gameState.player4.name}</div>
             )}
           </div>
+          <div className="purchasedBy" />
         </div>
       </div>
     </>
