@@ -28,10 +28,10 @@ function startGame(state, game) {
 }
 
 function rollDice(state) {
-  // const dice1 = Math.floor(Math.random() * 6) + 1;
-  // const dice2 = Math.floor(Math.random() * 6) + 1;
-  const dice1 = 1;
-  const dice2 = 1;
+  const dice1 = Math.floor(Math.random() * 6) + 1;
+  const dice2 = Math.floor(Math.random() * 6) + 1;
+  // const dice1 = 1;
+  // const dice2 = 1;
 
   const playerPrevIndex = state[state.currentPlayerName].currentIndex;
   const currDiceVal = dice1 + dice2;
