@@ -26,8 +26,6 @@ const Card = ({
     (element) => element.cardIndex === index,
   );
 
-  console.log(cardPurchasedByPlayerIndex);
-
   const playerPurchasedCard = () => (cardPurchasedByPlayerIndex !== -1
     && gameState.cardsPurchasedBy[cardPurchasedByPlayerIndex].purchasedByPlayer
     === gameState.currentPlayerName);
@@ -132,7 +130,7 @@ const Card = ({
           index={index}
           cardIcon={cardIcon}
           chanceIndex={randomChanceIndex - 1}
-          communityIndex={3}
+          communityIndex={randomCommunityIndex - 1}
         >
           {modalContent}
         </Modal>

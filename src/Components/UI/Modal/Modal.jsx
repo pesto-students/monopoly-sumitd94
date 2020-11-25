@@ -11,6 +11,8 @@ const Modal = ({
 }) => {
   const { gameState, dispatch } = useContext(GameContext);
 
+  const playerCurrentIndex = gameState.currentPlayerName.currentIndex;
+
   let isCardPurchased = false;
   let receiverName = '';
   let cardPurchasedByPlayerIndex = -1;
@@ -157,6 +159,9 @@ const Modal = ({
       case (7):
         amount = 25;
         break;
+      case (9):
+        amount = 200;
+        break;
       default:
         amount = 0;
         break;
@@ -190,12 +195,25 @@ const Modal = ({
       case (7):
         message = 'Receive $25 consultancy fee.';
         break;
+      case (9):
+        message = 'Bank error in your favor. Collect $200.';
+        break;
       default:
         message = '';
         break;
     }
 
     return message;
+  };
+
+  const getNearestUtility = () => {
+    if (playerCurrentIndex < 13) {
+      return 13;
+    } if (playerCurrentIndex > 13
+      && playerCurrentIndex < 29) {
+      return 29;
+    }
+    return 13;
   };
 
   const handleChanceCommunity = () => {
@@ -221,6 +239,28 @@ const Modal = ({
           },
         });
         modalClosed();
+      } else if (chanceIndex === 9) {
+        dispatch({
+          type: 'MOVE_PLAYER',
+          data: {
+            playerId: gameState.currentPlayerName,
+            newCardPositionIndex: 6,
+            playerShouldCollectGoMoney: false,
+          },
+        });
+
+        modalClosed();
+      } else if (chanceIndex === 5) {
+        dispatch({
+          type: 'MOVE_PLAYER',
+          data: {
+            playerId: gameState.currentPlayerName,
+            newCardPositionIndex: getNearestUtility(),
+            playerShouldCollectGoMoney: false,
+          },
+        });
+
+        modalClosed();
       } else {
         dispatch({
           type: 'NEXT_TURN',
@@ -244,7 +284,8 @@ const Modal = ({
         || communityIndex === 4
         || communityIndex === 5
         || communityIndex === 6
-        || communityIndex === 7) {
+        || communityIndex === 7
+        || communityIndex === 9) {
         dispatch({
           type: 'COLLECT_AMOUNT',
           data: {
