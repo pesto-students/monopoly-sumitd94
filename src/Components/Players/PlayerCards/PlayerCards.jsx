@@ -10,11 +10,46 @@ const PlayerCards = ({ cardDetails }) => {
       <div className={classNames.flipCard}>
         <div className={classNames.flipCardInner}>
           <div className={classNames.flipCardFront}>
-            <div
-              className={classNames[card.cardColor]}
-            />
-            <div className={classNames.propertyName}>
+            <div className={[classNames[card.cardColor], classNames.nameDesign].join(' ')}>
               {card.name}
+            </div>
+            <div className={classNames.rentDetails}>
+              <p>
+                Base Rent:
+                {card.baserent}
+              </p>
+            </div>
+            <div className={classNames.houseRents}>
+
+              <div className={classNames.houseRent}>
+                <p>Rent 1</p>
+                <p>
+                  $
+                  {card.groupNumber === 1 ? 25 : card.rent1}
+                </p>
+              </div>
+
+              <div className={classNames.houseRent}>
+                <p>Rent 2</p>
+                <p>
+                  $
+                  {card.groupNumber === 1 ? 50 : card.rent2}
+                </p>
+              </div>
+              <div className={classNames.houseRent}>
+                <p>Rent 3</p>
+                <p>
+                  $
+                  {card.groupNumber === 1 ? 100 : card.rent3}
+                </p>
+              </div>
+              <div className={classNames.houseRent}>
+                <p>Rent 4</p>
+                <p>
+                  $
+                  {card.groupNumber === 1 ? 200 : card.rent4}
+                </p>
+              </div>
             </div>
             <p className={classNames.cardPrices}>{`$${card.price}`}</p>
           </div>

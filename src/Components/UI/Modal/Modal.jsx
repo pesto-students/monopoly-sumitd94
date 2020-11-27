@@ -1,6 +1,6 @@
-import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
+import React, { useContext } from 'react';
 import { GameContext } from '../../../contexts/context';
 import Backdrop from '../Backdrop/Backdrop';
 
